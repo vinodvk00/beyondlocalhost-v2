@@ -7,6 +7,7 @@ export interface IUser extends Document {
     fullname: string;
     password?: string;
     role: 'admin' | 'user';
+    profilePicture?: string;
     refreshToken?: string;
     isPasswordCorrect(password: string): Promise<boolean>;
     generateAccessToken(): string;
@@ -38,6 +39,12 @@ const userSchema = new Schema<IUser>(
             enum: ['admin', 'user'],
             default: 'user',
         },
+        profilePicture: {
+            type: String,
+            default:
+                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+        },
+
         refreshToken: {
             type: String,
         },
