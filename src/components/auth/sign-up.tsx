@@ -41,8 +41,55 @@ export default function SignUp() {
         }
     };
 
+    const handleSignUp = async () => {
+        if (!email || !password || !firstName || !lastName) {
+            toast.error('Please fill in all required fields');
+            return;
+        }
+
+        if (password !== passwordConfirmation) {
+            toast.error('Passwords do not match');
+            return;
+        }
+
+        setLoading(true);
+        try {
+            await signUp.email(
+                {
+                    email,
+                    password,
+                    name: `${firstName} ${lastName}`,
+                    // image: image
+                    //     ? await convertImageToBase64(image)
+                    //     : undefined,
+                },
+                {
+                    onRequest: () => {
+                        setLoading(true);
+                    },
+                    onResponse: () => {
+                        setLoading(false);
+                    },
+                    onSuccess: () => {
+                        toast.success('Account created successfully!');
+                        router.push('/dashboard');
+                    },
+                    onError: (ctx) => {
+                        toast.error(
+                            ctx.error.message || 'Failed to create account'
+                        );
+                        setLoading(false);
+                    },
+                }
+            );
+        } catch (error) {
+            toast.error('An unexpected error occurred');
+            setLoading(false);
+        }
+    };
+
     return (
-        <Card className="z-50 max-w-md rounded-md rounded-t-none">
+        <Card className="z-50 max-w-md rounded-md">
             <CardHeader>
                 <CardTitle className="text-lg md:text-xl">Sign Up</CardTitle>
                 <CardDescription className="text-xs md:text-sm">
@@ -58,9 +105,7 @@ export default function SignUp() {
                                 id="first-name"
                                 placeholder="Max"
                                 required
-                                onChange={(e) => {
-                                    setFirstName(e.target.value);
-                                }}
+                                onChange={(e) => setFirstName(e.target.value)}
                                 value={firstName}
                             />
                         </div>
@@ -70,13 +115,12 @@ export default function SignUp() {
                                 id="last-name"
                                 placeholder="Robinson"
                                 required
-                                onChange={(e) => {
-                                    setLastName(e.target.value);
-                                }}
+                                onChange={(e) => setLastName(e.target.value)}
                                 value={lastName}
                             />
                         </div>
                     </div>
+
                     <div className="grid gap-2">
                         <Label htmlFor="email">Email</Label>
                         <Input
@@ -84,12 +128,11 @@ export default function SignUp() {
                             type="email"
                             placeholder="m@example.com"
                             required
-                            onChange={(e) => {
-                                setEmail(e.target.value);
-                            }}
+                            onChange={(e) => setEmail(e.target.value)}
                             value={email}
                         />
                     </div>
+
                     <div className="grid gap-2">
                         <Label htmlFor="password">Password</Label>
                         <Input
@@ -101,8 +144,11 @@ export default function SignUp() {
                             placeholder="Password"
                         />
                     </div>
+
                     <div className="grid gap-2">
-                        <Label htmlFor="password">Confirm Password</Label>
+                        <Label htmlFor="password_confirmation">
+                            Confirm Password
+                        </Label>
                         <Input
                             id="password_confirmation"
                             type="password"
@@ -114,7 +160,8 @@ export default function SignUp() {
                             placeholder="Confirm Password"
                         />
                     </div>
-                    <div className="grid gap-2">
+
+                    {/* <div className="grid gap-2">
                         <Label htmlFor="image">Profile Image (optional)</Label>
                         <div className="flex items-end gap-4">
                             {imagePreview && (
@@ -122,8 +169,8 @@ export default function SignUp() {
                                     <Image
                                         src={imagePreview}
                                         alt="Profile preview"
-                                        layout="fill"
-                                        objectFit="cover"
+                                        fill
+                                        style={{ objectFit: 'cover' }}
                                     />
                                 </div>
                             )}
@@ -146,36 +193,13 @@ export default function SignUp() {
                                 )}
                             </div>
                         </div>
-                    </div>
+                    </div> */}
+
                     <Button
                         type="submit"
                         className="w-full"
                         disabled={loading}
-                        onClick={async () => {
-                            await signUp.email({
-                                email,
-                                password,
-                                name: `${firstName} ${lastName}`,
-                                image: image
-                                    ? await convertImageToBase64(image)
-                                    : '',
-                                callbackURL: '/dashboard',
-                                fetchOptions: {
-                                    onResponse: () => {
-                                        setLoading(false);
-                                    },
-                                    onRequest: () => {
-                                        setLoading(true);
-                                    },
-                                    onError: (ctx) => {
-                                        toast.error(ctx.error.message);
-                                    },
-                                    onSuccess: async () => {
-                                        router.push('/dashboard');
-                                    },
-                                },
-                            });
-                        }}
+                        onClick={handleSignUp}
                     >
                         {loading ? (
                             <Loader2 size={16} className="animate-spin" />
@@ -197,11 +221,11 @@ export default function SignUp() {
     );
 }
 
-async function convertImageToBase64(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-}
+// async function convertImageToBase64(file: File): Promise<string> {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+//         reader.onloadend = () => resolve(reader.result as string);
+//         reader.onerror = reject;
+//         reader.readAsDataURL(file);
+//     });
+// }

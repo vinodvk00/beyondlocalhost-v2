@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter, Merriweather } from 'next/font/google';
+import { Toaster } from 'sonner';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 import { Header } from '@/components/Header';
+import { AuthProvider } from '@/providers/auth-provider';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -27,14 +29,17 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={inter.className}>
+            <body className={'inter.className'}>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
                     enableSystem
                 >
-                    <Header />
-                    {children}
+                    <AuthProvider>
+                        <Header />
+                        {children}
+                        <Toaster />
+                    </AuthProvider>
                 </ThemeProvider>
             </body>
         </html>
