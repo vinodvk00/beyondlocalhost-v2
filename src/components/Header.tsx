@@ -31,6 +31,8 @@ import {
 } from '@/components/ui/sheet';
 import ThemeToggleButton from './ui/theme-toggle-button';
 
+// todo: auto hide on scroll down and show on scroll up
+
 export const Header = () => {
     const router = useRouter();
     const { user, isAuthenticated, isLoading } = useAuth();
