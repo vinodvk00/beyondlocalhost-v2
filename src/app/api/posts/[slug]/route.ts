@@ -5,12 +5,12 @@ import connectDB from '@/utils/mongodb.util';
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { slug: string } }
+    { params }: { params: Promise<{ slug: string }> }
 ) {
     try {
         await connectDB();
 
-        const { slug } = params;
+        const { slug } = await params;
 
         if (!slug) {
             return NextResponse.json(
@@ -54,7 +54,7 @@ export async function GET(
 
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { slug: string } }
+    { params }: { params: Promise<{ slug: string }> } // ← Changed: Promise<{ slug: string }>
 ) {
     try {
         await connectDB();
@@ -70,7 +70,7 @@ export async function PUT(
             );
         }
 
-        const { slug } = params;
+        const { slug } = await params;
         const body = await request.json();
         const { title, content, contentHtml, category, tags } = body;
 
@@ -176,7 +176,7 @@ export async function PUT(
 
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { slug: string } }
+    { params }: { params: Promise<{ slug: string }> }
 ) {
     try {
         await connectDB();
@@ -192,7 +192,7 @@ export async function DELETE(
             );
         }
 
-        const { slug } = params;
+        const { slug } = await params;
 
         const post = await Post.findOne({ slug });
 
