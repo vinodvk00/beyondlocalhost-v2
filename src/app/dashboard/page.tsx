@@ -1,7 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { FileText, PlusCircle, Settings, User } from 'lucide-react';
+import {
+    Eye,
+    FileText,
+    PlusCircle,
+    Settings,
+    TrendingUp,
+    User,
+} from 'lucide-react';
+import { useAuth } from '@/hooks/use-auth';
 import { useRole } from '@/hooks/use-role';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,119 +21,189 @@ import {
 } from '@/components/ui/card';
 import { RoleGuard } from '@/components/role-guard';
 
-export default function Dashboard() {
+export default function DashboardPage() {
     const { hasRole, isAdmin, currentRole } = useRole();
+    const { user } = useAuth();
+
+    // Mock data - replace with real data later
+    const stats = {
+        totalPosts: 12,
+        totalViews: 1247,
+        monthlyViews: 234,
+        topPost: 'Getting Started with Next.js 15',
+    };
 
     return (
-        <div className="mx-auto max-w-6xl space-y-8 p-6">
-            <div>
-                <h1 className="mb-2 text-3xl font-bold">Dashboard</h1>
+        <div className="space-y-6">
+            {/* Welcome Section */}
+            <div className="flex flex-col gap-2">
+                <h1 className="text-3xl font-bold tracking-tight">
+                    Welcome back, {user?.name?.split(' ')[0] || 'there'}!
+                </h1>
                 <p className="text-muted-foreground">
-                    Welcome back, {currentRole}!
+                    Here's what's happening with your blog today.
                 </p>
             </div>
 
-            {/* Blog Management Section */}
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {/* Create Post Card */}
-                <Card className="transition-shadow hover:shadow-md">
-                    <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                        <div className="flex items-center space-x-2">
-                            <PlusCircle className="text-primary h-5 w-5" />
-                            <CardTitle className="text-lg">
-                                Create Post
-                            </CardTitle>
-                        </div>
+            {/* Stats Overview */}
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                            Total Posts
+                        </CardTitle>
+                        <FileText className="text-muted-foreground h-4 w-4" />
                     </CardHeader>
                     <CardContent>
-                        <CardDescription className="mb-4">
-                            Write and publish a new blog post using our editor.
-                        </CardDescription>
-                        <Link href="/posts/create">
-                            <Button className="w-full">
-                                <PlusCircle className="mr-2 h-4 w-4" />
-                                New Post
-                            </Button>
-                        </Link>
+                        <div className="text-2xl font-bold">
+                            {stats.totalPosts}
+                        </div>
+                        <p className="text-muted-foreground text-xs">
+                            Published articles
+                        </p>
                     </CardContent>
                 </Card>
 
-                {/* Manage Posts Card */}
-                <Card className="transition-shadow hover:shadow-md">
-                    <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                        <div className="flex items-center space-x-2">
-                            <FileText className="h-5 w-5 text-blue-500" />
-                            <CardTitle className="text-lg">My Posts</CardTitle>
-                        </div>
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                            Total Views
+                        </CardTitle>
+                        <Eye className="text-muted-foreground h-4 w-4" />
                     </CardHeader>
                     <CardContent>
-                        <CardDescription className="mb-4">
-                            View, edit, and manage your published blog posts.
-                        </CardDescription>
-                        <Link href="/posts">
-                            <Button variant="outline" className="w-full">
-                                <FileText className="mr-2 h-4 w-4" />
-                                View Posts
-                            </Button>
-                        </Link>
+                        <div className="text-2xl font-bold">
+                            {stats.totalViews.toLocaleString()}
+                        </div>
+                        <p className="text-muted-foreground text-xs">
+                            All time views
+                        </p>
                     </CardContent>
                 </Card>
 
-                {/* Editor Demo Card */}
-                <Card className="transition-shadow hover:shadow-md">
-                    <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                        <div className="flex items-center space-x-2">
-                            <Settings className="h-5 w-5 text-green-500" />
-                            <CardTitle className="text-lg">
-                                Editor Demo
-                            </CardTitle>
-                        </div>
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                            This Month
+                        </CardTitle>
+                        <TrendingUp className="text-muted-foreground h-4 w-4" />
                     </CardHeader>
                     <CardContent>
-                        <CardDescription className="mb-4">
-                            Test the BlockNote editor and see output formats.
-                        </CardDescription>
-                        <Link href="/editor-demo">
-                            <Button variant="outline" className="w-full">
-                                <Settings className="mr-2 h-4 w-4" />
-                                Try Editor
-                            </Button>
-                        </Link>
+                        <div className="text-2xl font-bold">
+                            +{stats.monthlyViews}
+                        </div>
+                        <p className="text-muted-foreground text-xs">
+                            Views this month
+                        </p>
+                    </CardContent>
+                </Card>
+
+                <Card>
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">
+                            Role
+                        </CardTitle>
+                        <User className="text-muted-foreground h-4 w-4" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold capitalize">
+                            {currentRole}
+                        </div>
+                        <p className="text-muted-foreground text-xs">
+                            Account type
+                        </p>
                     </CardContent>
                 </Card>
             </div>
 
-            {/* Quick Actions */}
-            <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                        <User className="h-5 w-5" />
-                        <span>Quick Actions</span>
-                    </CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="flex flex-wrap gap-3">
-                        <Link href="/posts/create">
-                            <Button size="sm">
+            {/* Main Dashboard Grid */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {/* Quick Actions */}
+                <Card className="col-span-1">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <PlusCircle className="h-5 w-5" />
+                            Quick Actions
+                        </CardTitle>
+                        <CardDescription>
+                            Get started with common tasks
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                        <Link href="/posts/create" className="block">
+                            <Button className="w-full justify-start" size="lg">
                                 <PlusCircle className="mr-2 h-4 w-4" />
-                                Write Post
+                                New Blog Post
                             </Button>
                         </Link>
-                        <Link href="/posts">
-                            <Button variant="outline" size="sm">
+
+                        <Link href="/posts" className="block">
+                            <Button
+                                variant="outline"
+                                className="w-full justify-start"
+                                size="lg"
+                            >
                                 <FileText className="mr-2 h-4 w-4" />
-                                All Posts
+                                Manage Posts
                             </Button>
                         </Link>
-                        <Link href="/editor-demo">
-                            <Button variant="ghost" size="sm">
+
+                        <Link href="/editor-demo" className="block">
+                            <Button
+                                variant="ghost"
+                                className="w-full justify-start"
+                                size="lg"
+                            >
                                 <Settings className="mr-2 h-4 w-4" />
                                 Test Editor
                             </Button>
                         </Link>
-                    </div>
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+
+                {/* Recent Activity / Top Performing */}
+                <Card className="col-span-1 md:col-span-2">
+                    <CardHeader>
+                        <CardTitle>Recent Activity</CardTitle>
+                        <CardDescription>
+                            Your latest content and performance
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            {/* Top Performing Post */}
+                            <div className="flex items-start space-x-4">
+                                <div className="rounded-lg bg-green-100 p-2 dark:bg-green-900">
+                                    <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                    <p className="text-foreground text-sm font-medium">
+                                        Top Performing Post
+                                    </p>
+                                    <p className="text-muted-foreground truncate text-sm">
+                                        {stats.topPost}
+                                    </p>
+                                    <p className="text-muted-foreground text-xs">
+                                        234 views this week
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Recent Posts Placeholder */}
+                            <div className="text-muted-foreground text-sm">
+                                📝 Recent posts and detailed analytics coming
+                                soon...
+                            </div>
+
+                            <Link href="/posts">
+                                <Button variant="outline" size="sm">
+                                    View All Posts
+                                </Button>
+                            </Link>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
 
             {/* Admin Panel - Only show to admins */}
             <RoleGuard requiredRole="admin">
@@ -178,18 +256,6 @@ export default function Dashboard() {
                         </div>
                     </CardContent>
                 </Card>
-            )}
-
-            {/* Conditional rendering for role-specific actions */}
-            {isAdmin() && (
-                <div className="rounded-lg bg-yellow-100 p-4 dark:bg-yellow-900">
-                    <h3 className="font-semibold text-yellow-800 dark:text-yellow-200">
-                        Super Admin Actions
-                    </h3>
-                    <p className="mt-1 text-sm text-yellow-700 dark:text-yellow-300">
-                        You have full access to all system functions.
-                    </p>
-                </div>
             )}
         </div>
     );
