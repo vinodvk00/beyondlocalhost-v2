@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import '@blocknote/shadcn/style.css';
 import {
     ArrowLeft,
     Calendar,
     Edit,
-    Folder,
+    MoreHorizontal,
     Tag,
     Trash2,
     User,
@@ -15,18 +16,18 @@ import { toast } from 'sonner';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface Post {
     _id: string;
     title: string;
-    content: any[]; // BlockNote JSON array (for editing)
-    contentHtml: string; // Rendered HTML (for display)
+    content: any[];
+    contentHtml: string;
     slug: string;
     category: string;
     tags: string[];
@@ -47,7 +48,6 @@ export default function SinglePostView() {
 
     const slug = params.slug as string;
 
-    // Fetch post data
     useEffect(() => {
         const fetchPost = async () => {
             if (!slug) return;
@@ -88,11 +88,9 @@ export default function SinglePostView() {
         fetchPost();
     }, [slug]);
 
-    // Check if current user is the author
     const isAuthor =
         isAuthenticated && user && post && user.id === post.authorId;
 
-    // Handle post deletion
     const handleDelete = async () => {
         if (!post || !isAuthor) return;
 
@@ -119,150 +117,165 @@ export default function SinglePostView() {
         }
     };
 
-    // Format date
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
         });
     };
 
-    // Loading state
     if (loading) {
         return (
-            <div className="mx-auto max-w-4xl p-6">
-                <div className="py-12 text-center">
-                    <div className="border-primary mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2"></div>
-                    <p className="text-muted-foreground">Loading post...</p>
+            <div className="mx-auto max-w-4xl px-6 py-12">
+                <div className="flex items-center justify-center py-24">
+                    <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
                 </div>
             </div>
         );
     }
 
-    // Error state
     if (error) {
         return (
-            <div className="mx-auto max-w-4xl p-6">
-                <Card className="border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950">
-                    <CardHeader>
-                        <CardTitle className="text-red-600 dark:text-red-400">
-                            Error
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="mb-4 text-red-700 dark:text-red-300">
-                            {error}
-                        </p>
-                        <div className="flex gap-2">
-                            <Button
-                                onClick={() => router.back()}
-                                variant="outline"
-                            >
-                                <ArrowLeft className="mr-2 h-4 w-4" />
-                                Go Back
-                            </Button>
-                            <Button onClick={() => window.location.reload()}>
-                                Try Again
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
+            <div className="mx-auto max-w-4xl px-6 py-12">
+                <div className="text-center">
+                    <h1 className="mb-4 text-2xl font-bold text-red-600">
+                        {error === 'Post not found'
+                            ? 'Post Not Found'
+                            : 'Error'}
+                    </h1>
+                    <p className="text-muted-foreground mb-6">
+                        {error === 'Post not found'
+                            ? "The post you're looking for doesn't exist or has been removed."
+                            : error}
+                    </p>
+                    <div className="flex justify-center gap-4">
+                        <Button variant="outline" onClick={() => router.back()}>
+                            <ArrowLeft className="mr-2 h-4 w-4" />
+                            Go Back
+                        </Button>
+                        <Button onClick={() => router.push('/posts')}>
+                            View All Posts
+                        </Button>
+                    </div>
+                </div>
             </div>
         );
     }
 
-    // Post not found
     if (!post) {
         return (
-            <div className="mx-auto max-w-4xl p-6">
-                <Card>
-                    <CardContent className="py-12 text-center">
-                        <h2 className="mb-2 text-2xl font-bold">
-                            Post Not Found
-                        </h2>
-                        <p className="text-muted-foreground mb-4">
-                            The post you're looking for doesn't exist or has
-                            been removed.
-                        </p>
-                        <Button onClick={() => router.push('/posts')}>
-                            <ArrowLeft className="mr-2 h-4 w-4" />
-                            Back to Posts
-                        </Button>
-                    </CardContent>
-                </Card>
+            <div className="mx-auto max-w-4xl px-6 py-12">
+                <div className="text-center">
+                    <h1 className="mb-4 text-2xl font-bold">Post Not Found</h1>
+                    <p className="text-muted-foreground mb-6">
+                        The post you're looking for doesn't exist or has been
+                        removed.
+                    </p>
+                    <Button onClick={() => router.push('/posts')}>
+                        <ArrowLeft className="mr-2 h-4 w-4" />
+                        Back to Posts
+                    </Button>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="mx-auto max-w-4xl space-y-6 p-6">
-            {/* Navigation */}
-            <div className="flex items-center justify-between">
-                <Button
-                    variant="ghost"
-                    onClick={() => router.back()}
-                    className="flex items-center gap-2"
-                >
-                    <ArrowLeft className="h-4 w-4" />
-                    Back
-                </Button>
+        <div className="bg-background min-h-screen">
+            {/* Top Navigation Bar */}
+            <div className="border-border bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10 border-b backdrop-blur">
+                <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => router.back()}
+                        className="flex items-center gap-2"
+                    >
+                        <ArrowLeft className="h-4 w-4" />
+                        Back
+                    </Button>
 
-                {/* Author Actions */}
-                {isAuthor && (
-                    <div className="flex gap-2">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() =>
-                                router.push(`/posts/${post.slug}/edit`)
-                            }
-                        >
-                            <Edit className="mr-2 h-4 w-4" />
-                            Edit
-                        </Button>
-                        <Button
-                            variant="destructive"
-                            size="sm"
-                            onClick={handleDelete}
-                        >
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Delete
-                        </Button>
-                    </div>
-                )}
+                    {/* Author Actions */}
+                    {isAuthor && (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="sm">
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem
+                                    onClick={() =>
+                                        router.push(`/posts/${post.slug}/edit`)
+                                    }
+                                >
+                                    <Edit className="mr-2 h-4 w-4" />
+                                    Edit Post
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem
+                                    onClick={handleDelete}
+                                    className="text-red-600 focus:text-red-600"
+                                >
+                                    <Trash2 className="mr-2 h-4 w-4" />
+                                    Delete Post
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    )}
+                </div>
             </div>
 
-            {/* Post Header */}
-            <Card>
-                <CardHeader>
-                    <CardTitle className="text-3xl leading-tight font-bold">
-                        {post.title}
-                    </CardTitle>
-                    <CardDescription className="flex flex-wrap items-center gap-4 text-base">
-                        <span className="flex items-center gap-2">
-                            <User className="h-4 w-4" />
-                            {post.authorName}
+            {/* Main Content */}
+            <article className="mx-auto max-w-4xl px-6 py-12">
+                {/* Article Header */}
+                <header className="mb-12">
+                    {/* Category Badge */}
+                    <div className="mb-4">
+                        <span className="text-primary bg-primary/10 rounded-full px-3 py-1 text-sm font-medium capitalize">
+                            {post.category}
                         </span>
-                        <span className="flex items-center gap-2">
+                    </div>
+
+                    {/* Title */}
+                    <h1 className="mb-6 text-4xl leading-tight font-bold tracking-tight md:text-5xl lg:text-6xl">
+                        {post.title}
+                    </h1>
+
+                    {/* Author and Meta Info */}
+                    <div className="text-muted-foreground flex flex-wrap items-center gap-6">
+                        <div className="flex items-center gap-2">
+                            <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium">
+                                {post.authorName.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <div className="text-foreground text-sm font-medium">
+                                    {post.authorName}
+                                </div>
+                                <div className="text-xs">Author</div>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-1 text-sm">
                             <Calendar className="h-4 w-4" />
                             {formatDate(post.createdAt)}
-                        </span>
-                        <span className="flex items-center gap-2">
-                            <Folder className="h-4 w-4" />
-                            <span className="capitalize">{post.category}</span>
-                        </span>
-                    </CardDescription>
+                        </div>
+
+                        {post.updatedAt !== post.createdAt && (
+                            <div className="text-xs">
+                                Updated {formatDate(post.updatedAt)}
+                            </div>
+                        )}
+                    </div>
 
                     {/* Tags */}
                     {post.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-2 pt-2">
+                        <div className="mt-6 flex flex-wrap gap-2">
                             {post.tags.map((tag, index) => (
                                 <span
                                     key={index}
-                                    className="bg-secondary text-secondary-foreground inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm"
+                                    className="bg-muted text-muted-foreground inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs"
                                 >
                                     <Tag className="h-3 w-3" />
                                     {tag}
@@ -270,30 +283,31 @@ export default function SinglePostView() {
                             ))}
                         </div>
                     )}
-                </CardHeader>
-            </Card>
+                </header>
 
-            {/* Post Content - Use BlockNote's native HTML with proper styling */}
-            <Card>
-                <CardContent className="p-6">
+                {/* Separator */}
+                <div className="border-border mb-12 border-t"></div>
+
+                {/* Article Content */}
+                <div className="prose prose-lg max-w-none">
                     <div
                         className="blocknote-content"
                         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
                     />
-                </CardContent>
-            </Card>
+                </div>
 
-            {/* Post Meta */}
-            <Card>
-                <CardContent className="py-4">
+                {/* Footer */}
+                <footer className="border-border mt-16 border-t pt-8">
                     <div className="text-muted-foreground text-sm">
-                        {post.updatedAt !== post.createdAt && (
-                            <p>Last updated: {formatDate(post.updatedAt)}</p>
-                        )}
-                        <p>Post ID: {post.slug}</p>
+                        <p className="mb-2">Article ID: {post.slug}</p>
+                        <p>
+                            Published on {formatDate(post.createdAt)}
+                            {post.updatedAt !== post.createdAt &&
+                                ` • Last updated ${formatDate(post.updatedAt)}`}
+                        </p>
                     </div>
-                </CardContent>
-            </Card>
+                </footer>
+            </article>
         </div>
     );
 }

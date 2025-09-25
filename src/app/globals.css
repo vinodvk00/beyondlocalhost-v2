@@ -122,3 +122,408 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Base Typography Settings */
+.blocknote-content {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 20px;
+    line-height: 1.6;
+    max-width: none;
+    overflow-wrap: break-word;
+}
+
+.blocknote-content .bn-container {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* Block Spacing */
+.blocknote-content .bn-block {
+    margin-bottom: 0.75rem;
+}
+
+.blocknote-content .bn-block:last-child {
+    margin-bottom: 0;
+}
+
+/* Nested Block Indentation */
+.blocknote-content .bn-block-group .bn-block {
+    margin-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Paragraphs */
+.blocknote-content .bn-block-content[data-content-type='paragraph'] {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+}
+
+.blocknote-content
+    .bn-block-content[data-content-type='paragraph']
+    .bn-inline-content {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* Headings */
+.blocknote-content .bn-block-content[data-content-type='heading'] h1,
+.blocknote-content .bn-block-content[data-content-type='heading'] h2,
+.blocknote-content .bn-block-content[data-content-type='heading'] h3,
+.blocknote-content .bn-block-content[data-content-type='heading'] h4,
+.blocknote-content .bn-block-content[data-content-type='heading'] h5,
+.blocknote-content .bn-block-content[data-content-type='heading'] h6 {
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.blocknote-content
+    .bn-block-content[data-content-type='heading'][data-level='1']
+    h1 {
+    font-size: 2.5rem;
+    line-height: 1.25;
+    font-weight: 700;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.blocknote-content
+    .bn-block-content[data-content-type='heading'][data-level='2']
+    h2 {
+    font-size: 2rem;
+    line-height: 1.3;
+    font-weight: 600;
+    margin: 0.875rem 0 0.375rem 0;
+}
+
+.blocknote-content
+    .bn-block-content[data-content-type='heading'][data-level='3']
+    h3 {
+    font-size: 1.5rem;
+    line-height: 1.35;
+    font-weight: 600;
+    margin: 0.75rem 0 0.25rem 0;
+}
+
+/* Quotes */
+.blocknote-content .bn-block-content[data-content-type='quote'] {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+    font-style: italic;
+    font-size: 1.1em;
+    line-height: 1.55;
+}
+
+/* Lists */
+.blocknote-content .bn-block-content[data-content-type='bulletListItem'],
+.blocknote-content .bn-block-content[data-content-type='numberedListItem'] {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.blocknote-content
+    .bn-block-content[data-content-type='bulletListItem']
+    .bn-inline-content,
+.blocknote-content
+    .bn-block-content[data-content-type='numberedListItem']
+    .bn-inline-content {
+    font-size: 18px;
+}
+
+/* Links */
+.blocknote-content .bn-inline-content a {
+    color: hsl(var(--primary));
+    text-decoration: underline;
+    text-decoration-color: hsl(var(--color-blue-400) / 0.4);
+    text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.blocknote-content .bn-inline-content a:hover {
+    text-decoration-color: hsl(var(--accent));
+    background-color: hsl(var(--primary) / 0.1);
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+/* Text Formatting */
+.blocknote-content .bn-inline-content strong {
+    font-weight: 600;
+}
+
+.blocknote-content .bn-inline-content em {
+    font-style: italic;
+}
+
+/* Images */
+.blocknote-content .bn-block-content[data-content-type='image'] {
+    margin: 1.25rem 0;
+    text-align: center;
+}
+
+.blocknote-content .bn-block-content[data-content-type='image'] img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px hsl(var(--border) / 0.3);
+}
+
+/* Base Typography Settings */
+.blocknote-content {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 20px;
+    line-height: 1.6;
+    /* max-width: none; */
+}
+
+.blocknote-content .bn-container {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* Block Spacing */
+.blocknote-content .bn-block {
+    margin-bottom: 0.75rem;
+}
+
+.blocknote-content .bn-block:last-child {
+    margin-bottom: 0;
+}
+
+/* Nested Block Indentation */
+.blocknote-content .bn-block-group .bn-block {
+    margin-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Paragraphs */
+.blocknote-content .bn-block-content[data-content-type='paragraph'] {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+    font-weight: 400;
+}
+
+.blocknote-content
+    .bn-block-content[data-content-type='paragraph']
+    .bn-inline-content {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* Headings */
+.blocknote-content .bn-block-content[data-content-type='heading'] h1,
+.blocknote-content .bn-block-content[data-content-type='heading'] h2,
+.blocknote-content .bn-block-content[data-content-type='heading'] h3,
+.blocknote-content .bn-block-content[data-content-type='heading'] h4,
+.blocknote-content .bn-block-content[data-content-type='heading'] h5,
+.blocknote-content .bn-block-content[data-content-type='heading'] h6 {
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.blocknote-content
+    .bn-block-content[data-content-type='heading'][data-level='1']
+    h1 {
+    font-size: 2.5rem;
+    line-height: 1.25;
+    font-weight: 700;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.blocknote-content
+    .bn-block-content[data-content-type='heading'][data-level='2']
+    h2 {
+    font-size: 2rem;
+    line-height: 1.3;
+    font-weight: 600;
+    margin: 0.875rem 0 0.375rem 0;
+}
+
+.blocknote-content
+    .bn-block-content[data-content-type='heading'][data-level='3']
+    h3 {
+    font-size: 1.5rem;
+    line-height: 1.35;
+    font-weight: 600;
+    margin: 0.75rem 0 0.25rem 0;
+}
+
+/* Quotes */
+.blocknote-content .bn-block-content[data-content-type='quote'] {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+    font-style: italic;
+    font-size: 1.1em;
+    line-height: 1.55;
+}
+
+/* Lists */
+.blocknote-content .bn-block-content[data-content-type='bulletListItem'],
+.blocknote-content .bn-block-content[data-content-type='numberedListItem'] {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+/* Code Blocks - Enhanced for both themes */
+.blocknote-content .bn-block-content[data-content-type='codeBlock'] {
+    padding: 1.5rem;
+    margin: 1rem 0;
+    font-family:
+        var(--font-mono), 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono',
+        monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+}
+
+/* Links */
+.blocknote-content .bn-inline-content a {
+    color: hsl(var(--primary));
+    text-decoration: underline;
+    text-decoration-color: hsl(var(--primary) / 0.4);
+    text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.blocknote-content .bn-inline-content a:hover {
+    text-decoration-color: hsl(var(--primary));
+    background-color: hsl(var(--primary) / 0.1);
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+/* Text Formatting */
+.blocknote-content .bn-inline-content strong {
+    font-weight: 600;
+}
+
+.blocknote-content .bn-inline-content em {
+    font-style: italic;
+}
+
+/* Images */
+.blocknote-content .bn-block-content[data-content-type='image'] {
+    margin: 1.25rem 0;
+    text-align: center;
+}
+
+.blocknote-content .bn-block-content[data-content-type='image'] img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Table Container */
+.blocknote-content .bn-block-content[data-content-type='table'] {
+    margin: 1.5rem 0;
+    overflow-x: auto;
+}
+
+/* Table Element */
+.blocknote-content .bn-block-content[data-content-type='table'] table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Table Headers */
+.blocknote-content .bn-block-content[data-content-type='table'] th {
+    font-weight: 600;
+    padding: 12px 16px;
+    text-align: left;
+    background-color: hsl(var(--muted));
+    color: hsl(var(--foreground));
+    border-bottom: 2px solid hsl(var(--muted-foreground) / 0.3);
+    border-right: 1px solid hsl(var(--muted-foreground) / 0.2);
+    position: relative;
+}
+
+.blocknote-content .bn-block-content[data-content-type='table'] th:last-child {
+    border-right: none;
+}
+
+/* Table Cells */
+.blocknote-content .bn-block-content[data-content-type='table'] td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid hsl(var(--muted-foreground) / 0.2);
+    border-right: 1px solid hsl(var(--muted-foreground) / 0.15);
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--card));
+}
+
+.blocknote-content .bn-block-content[data-content-type='table'] td:last-child {
+    border-right: none;
+}
+
+/* Table Rows */
+.blocknote-content .bn-block-content[data-content-type='table'] tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.blocknote-content .bn-block-content[data-content-type='table'] tbody tr:hover {
+    background-color: hsl(var(--muted) / 0.5);
+}
+
+.blocknote-content
+    .bn-block-content[data-content-type='table']
+    tbody
+    tr:last-child
+    td {
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .blocknote-content {
+        font-size: 18px;
+        line-height: 1.65;
+    }
+
+    .blocknote-content .bn-block-content[data-content-type='paragraph'] {
+        font-size: 18px;
+        line-height: 1.65;
+    }
+
+    .blocknote-content
+        .bn-block-content[data-content-type='heading'][data-level='1']
+        h1 {
+        font-size: 2rem;
+    }
+
+    .blocknote-content
+        .bn-block-content[data-content-type='heading'][data-level='2']
+        h2 {
+        font-size: 1.75rem;
+    }
+
+    .blocknote-content
+        .bn-block-content[data-content-type='heading'][data-level='3']
+        h3 {
+        font-size: 1.375rem;
+    }
+
+    .blocknote-content .bn-block-group .bn-block {
+        margin-left: 1rem;
+    }
+
+    /* Mobile table improvements */
+    .blocknote-content .bn-block-content[data-content-type='table'] {
+        font-size: 14px;
+    }
+
+    .blocknote-content .bn-block-content[data-content-type='table'] th,
+    .blocknote-content .bn-block-content[data-content-type='table'] td {
+        padding: 8px 12px;
+    }
+}
