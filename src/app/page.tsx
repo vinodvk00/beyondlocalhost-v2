@@ -1,23 +1,21 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-
-const BlockNoteDemo = dynamic(() => import('@/components/Editor/demoEditor'), {
-    ssr: false,
-    loading: () => (
-        <div className="flex items-center justify-center p-8">
-            <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
-            <span className="text-muted-foreground ml-3">
-                Loading editor...
-            </span>
-        </div>
-    ),
-});
+import SpaceBackground from '@/components/Landing/SpaceBackground';
+import HeroSection from '@/components/Landing/HeroSection';
+import AboutSection from '@/components/Landing/AboutSection';
+import WritingsSection from '@/components/Landing/WritingsSection';
+import ConnectSection from '@/components/Landing/ConnectSection';
 
 export default function Home() {
     return (
-        <div className="mx-24 mt-12">
-            <BlockNoteDemo />
-        </div>
+        <>
+            <SpaceBackground />
+            <main className="relative">
+                <HeroSection />
+                <AboutSection />
+                <WritingsSection />
+                <ConnectSection />
+            </main>
+        </>
     );
 }

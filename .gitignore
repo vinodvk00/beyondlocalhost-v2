@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# settings files
+.vscode/*
+*.json
+
+# md files
+*.md
+!README.md
+!LICENSE.md
+docs/**/*.md
+!docs/README.md
+!docs/LICENSE.md

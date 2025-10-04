@@ -121,6 +121,13 @@
     body {
         @apply bg-background text-foreground;
     }
+    button,
+    a,
+    [role='button'],
+    input[type='submit'],
+    input[type='button'] {
+        cursor: pointer;
+    }
 }
 
 /* Base Typography Settings */
