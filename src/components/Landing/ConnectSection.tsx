@@ -61,7 +61,7 @@ const socialLinks = [
 
 export default function ConnectSection() {
     return (
-        <footer className="relative border-t border-white/10 px-6 py-16">
+        <footer className="relative border-t border-border px-6 py-16">
             <div className="mx-auto max-w-4xl">
                 {/* Social Links */}
                 <motion.div
@@ -84,18 +84,18 @@ export default function ConnectSection() {
                             className="group relative cursor-pointer"
                         >
                             {/* Icon */}
-                            <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/20 text-gray-400 transition-all duration-300 hover:border-cyan-400 hover:bg-cyan-400/10 hover:text-cyan-400">
+                            <div className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-border text-muted-foreground transition-all duration-300 hover:border-cyan-500 hover:bg-cyan-500/10 hover:text-cyan-600 dark:hover:border-cyan-400 dark:hover:bg-cyan-400/10 dark:hover:text-cyan-400">
                                 {link.icon}
                             </div>
 
                             {/* Tooltip on hover */}
-                            <div className="pointer-events-none absolute bottom-16 left-1/2 z-10 w-48 -translate-x-1/2 rounded-lg border border-cyan-400/50 bg-gray-900/95 px-3 py-2 text-center text-sm text-gray-300 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
-                                <div className="mb-1 font-semibold text-cyan-400">
+                            <div className="pointer-events-none absolute bottom-16 left-1/2 z-10 w-48 -translate-x-1/2 rounded-lg border border-cyan-500/50 bg-white/95 px-3 py-2 text-center text-sm text-gray-700 opacity-0 shadow-lg backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100 dark:border-cyan-400/50 dark:bg-gray-900/95 dark:text-gray-300">
+                                <div className="mb-1 font-semibold text-cyan-600 dark:text-cyan-400">
                                     {link.name}
                                 </div>
                                 <div className="text-xs">{link.hoverText}</div>
                                 {/* Arrow */}
-                                <div className="absolute -bottom-[5px] left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-r border-b border-cyan-400/50 bg-gray-900/95"></div>
+                                <div className="absolute -bottom-[5px] left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-b border-r border-cyan-500/50 bg-white/95 dark:border-cyan-400/50 dark:bg-gray-900/95"></div>
                             </div>
                         </motion.a>
                     ))}
@@ -107,7 +107,7 @@ export default function ConnectSection() {
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                     viewport={{ once: true }}
-                    className="text-center text-gray-500"
+                    className="text-center text-muted-foreground"
                 >
                     <p className="text-sm">
                         beyondlocalhost © {new Date().getFullYear()}

@@ -43,7 +43,7 @@ export default function WritingsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="mb-16 text-center text-4xl font-bold text-white md:text-5xl"
+                    className="mb-16 text-center text-4xl font-bold text-foreground md:text-5xl"
                 >
                     Latest Writings
                 </motion.h2>
@@ -54,13 +54,13 @@ export default function WritingsSection() {
                         {[1, 2, 3].map((i) => (
                             <div
                                 key={i}
-                                className="h-64 animate-pulse rounded-lg bg-white/5"
+                                className="h-64 animate-pulse rounded-lg bg-muted/50"
                             />
                         ))}
                     </div>
                 ) : posts.length === 0 ? (
                     <div className="text-center">
-                        <p className="text-xl text-gray-400">
+                        <p className="text-xl text-muted-foreground">
                             No posts yet. Check back soon!
                         </p>
                     </div>
@@ -75,21 +75,21 @@ export default function WritingsSection() {
                                 viewport={{ once: true }}
                             >
                                 <Link href={`/posts/${post.slug}`}>
-                                    <div className="group h-full rounded-lg border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:border-cyan-400/50 hover:bg-white/10">
+                                    <div className="group h-full rounded-lg border border-border bg-card/50 p-6 backdrop-blur-sm transition-all duration-300 hover:border-cyan-500/50 hover:bg-card dark:border-white/10 dark:bg-white/5 dark:hover:border-cyan-400/50 dark:hover:bg-white/10">
                                         {/* Category Badge */}
                                         <div className="mb-4">
-                                            <span className="inline-block rounded-full bg-cyan-400/10 px-3 py-1 text-sm text-cyan-400">
+                                            <span className="inline-block rounded-full bg-cyan-500/10 px-3 py-1 text-sm text-cyan-600 dark:bg-cyan-400/10 dark:text-cyan-400">
                                                 {post.category}
                                             </span>
                                         </div>
 
                                         {/* Title */}
-                                        <h3 className="mb-3 text-xl font-semibold text-white transition-colors group-hover:text-cyan-400">
+                                        <h3 className="mb-3 text-xl font-semibold text-foreground transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-400">
                                             {post.title}
                                         </h3>
 
                                         {/* Meta Info */}
-                                        <div className="mt-auto flex items-center gap-2 text-sm text-gray-400">
+                                        <div className="mt-auto flex items-center gap-2 text-sm text-muted-foreground">
                                             <time>
                                                 {new Date(
                                                     post.createdAt
@@ -107,7 +107,7 @@ export default function WritingsSection() {
                                                 {post.tags.slice(0, 3).map((tag) => (
                                                     <span
                                                         key={tag}
-                                                        className="text-xs text-gray-500"
+                                                        className="text-xs text-muted-foreground/70"
                                                     >
                                                         #{tag}
                                                     </span>
@@ -132,7 +132,7 @@ export default function WritingsSection() {
                     >
                         <Link
                             href="/posts"
-                            className="inline-flex items-center gap-2 text-lg text-cyan-400 transition-colors hover:text-cyan-300"
+                            className="inline-flex items-center gap-2 text-lg text-cyan-600 transition-colors hover:text-cyan-500 dark:text-cyan-400 dark:hover:text-cyan-300"
                         >
                             View all writings
                             <svg

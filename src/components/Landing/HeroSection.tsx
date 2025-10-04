@@ -4,14 +4,14 @@ import { motion } from 'framer-motion';
 
 export default function HeroSection() {
     return (
-        <section className="relative flex min-h-screen items-center justify-center px-6">
+        <section className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center px-6">
             <div className="max-w-4xl text-center">
                 {/* Main brand name */}
                 <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="mb-8 text-6xl font-bold tracking-tight text-white md:text-7xl lg:text-8xl"
+                    className="mb-8 text-6xl font-bold tracking-tight text-foreground md:text-7xl lg:text-8xl"
                 >
                     beyondlocalhost
                 </motion.h1>
@@ -21,7 +21,7 @@ export default function HeroSection() {
                     initial={{ width: 0 }}
                     animate={{ width: '100%' }}
                     transition={{ duration: 1, delay: 0.3 }}
-                    className="mx-auto mb-12 h-[2px] max-w-md bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+                    className="mx-auto mb-12 h-[2px] max-w-md bg-gradient-to-r from-transparent via-cyan-500 to-transparent dark:via-cyan-400"
                 />
 
                 {/* Tagline */}
@@ -29,7 +29,7 @@ export default function HeroSection() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
-                    className="text-xl leading-relaxed text-gray-300 md:text-2xl"
+                    className="text-xl leading-relaxed text-muted-foreground md:text-2xl"
                 >
                     Building, breaking, and learning in web development and
                     cybersecurity
@@ -49,7 +49,7 @@ export default function HeroSection() {
                             repeat: Infinity,
                             ease: 'easeInOut',
                         }}
-                        className="flex flex-col items-center gap-2 text-gray-400"
+                        className="flex flex-col items-center gap-2 text-muted-foreground"
                     >
                         <span className="text-sm">Scroll to explore</span>
                         <svg

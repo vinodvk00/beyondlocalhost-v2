@@ -2,7 +2,15 @@ import { betterAuth } from 'better-auth';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import { MongoClient } from 'mongodb';
 
-const client = new MongoClient(process.env.MONGODB_URI!);
+if (!process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI is not defined');
+}
+
+const client = new MongoClient(process.env.MONGODB_URI, {
+    maxPoolSize: 10,
+    minPoolSize: 2,
+});
+
 const db = client.db();
 
 export const auth = betterAuth({

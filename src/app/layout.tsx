@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   Here, you'll find articles, and insights on topics ranging from programming to security operations. My goal is to share knowledge, document my learning journey, and engage with like-minded individuals.
 
   Feel free to explore, leave comments, and share your thoughts. Let's build a community where we can learn and grow together!`,
+    icons: {
+        icon: '/favicon.svg',
+    },
 };
 
 export default function RootLayout({
@@ -29,7 +32,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={'inter.className'}>
+            <body className={'inter.className'} suppressHydrationWarning>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
